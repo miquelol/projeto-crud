@@ -1,7 +1,20 @@
 const express = require('express')
 const path = require('path')
 
+
+
+const db = require('./database')
+const routes = require('./routes')
+
+
 const app = express()
+
+
+
+
+//conexão com o banco de dados
+db.connect()
+
 
 // definindo o tempalte engine
 app.set('view engine', 'ejs')
@@ -13,13 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // habilita serve para receber dados via post (formulário)
 app.use(express.urlencoded({extended: true}))
 
-// rotas
+//definindo as rotas
+app.use('/', routes)
 
-app.get('/', (req, res) => {
-    res.render('index',{
-        tittle: 'Titulo Teste'
-    })
-})
+
 
 //404 Error (not found)
 
